@@ -8,7 +8,7 @@ ng () {
 
 res=0
 
-out=$(seq 5 | ./sysk1.py)
+out=$(seq 5 | python3 ./sysk1.py)
 [ "${out}" = 15 ] || ng "$LINENO"
 
 [ "${res}" = 0 ] && echo OK
