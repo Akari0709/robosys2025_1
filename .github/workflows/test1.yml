@@ -1,9 +1,9 @@
   name: test1
   on: push
   jobs:
-    test:
+    test1:
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v3
-      - name: All test
-        run: bash -xv ./test.bash
+      - name: All test1
+        run: bash -xv ./test1.bash
