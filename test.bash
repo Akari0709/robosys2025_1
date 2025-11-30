@@ -15,15 +15,11 @@ echo "$INPUT" | python3 ./sysk1.py
 
 
 EXPECTED=$(cat <<EOF
-o 4
-e 3
-t 2
-l 2
-n 1
-m 1
-i 1
-h 1
-c 1
+a 2
+b 1
+c 2
+d 1
+e 1
 EOF
 )
 
