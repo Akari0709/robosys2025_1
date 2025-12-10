@@ -2,47 +2,31 @@
 #SPDX-FileCopyrightText: 2025 Akari Sunagawa
 #SPDX-License-Indentifier: BSD-3-Clause
 
-import sys
-import string
-from collections import Counter
-import subprocess
+gojuon = [
+    'あ','い','う','え','お',
+    'か','き','く','け','こ',
+    'さ','し','す','せ','そ',
+    'た','ち','つ','て','と',
+    'な','に','ぬ','ね','の',
+    'は','ひ','ふ','へ','ほ',
+    'ま','み','む','め','も',
+    'や','ゆ','よ',
+    'ら','り','る','れ','ろ',
+    'わ','を','ん'
+]
 
-def main():
-    print("文字を入力してください（Ctrl+D で終了）：")
-
-    # 標準入力から全文読み込み
+# 入力ループ
+while True:
     try:
-        text = sys.stdin.read()
+        char = input("文字を入力してください（終了は Ctrl+C）: ").strip()
+        if char == "":
+            continue
+        if char not in gojuon:
+            print("五十音以外です")
+            continue
+        idx = gojuon.index(char)
+        next_idx = (idx + 1) % len(gojuon)
+        print(gojuon[next_idx])
     except KeyboardInterrupt:
-        return 0
-
-    # アルファベットのみカウント
-    freq = Counter(ch.lower() for ch in text if ('A' <= ch <= 'Z') or ('a' <= ch <= 'z'))
-
-    # freq.txt に書き出し
-    try:
-        with open("freq.txt", "w", encoding="utf-8") as fout:
-            for ch in string.ascii_lowercase:  # a～z
-                if freq[ch] > 0:
-                    fout.write(f"{ch} {freq[ch]}\n")
-    except OSError:
-        print("出力ファイルを開けません")
-        return 1
-
-    print("\n文字頻度を freq.txt に出力しました。")
-    print("頻度の高い上位26件を表示します：\n")
-
-    # sort と head を使う（Cと同じ）
-    try:
-        result = subprocess.run(
-            "sort -k2 -nr freq.txt | head -n 26",
-            shell=True, text=True, capture_output=True
-        )
-        print(result.stdout)
-    except Exception as e:
-        print("sort / head 実行時にエラー:", e)
-
-    return 0
-
-if __name__ == "__main__":
-    sys.exit(main())
+        print("\n終了します")
+        break
