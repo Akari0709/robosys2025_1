@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+#SPDX-FileCopyrightText: 2025 Akari Sunagawa
+#SPDX-License-Indentifier: BSD-3-Clause
+
+import sys
+gojuon = [
+    'あ','い','う','え','お',
+    'か','き','く','け','こ',
+    'さ','し','す','せ','そ',
+    'た','ち','つ','て','と',
+    'な','に','ぬ','ね','の',
+    'は','ひ','ふ','へ','ほ',
+    'ま','み','む','め','も',
+    'や','ゆ','よ',
+    'ら','り','る','れ','ろ',
+    'わ','を','ん'
+]
+
+# 標準入力からすべて読む
+data = sys.stdin.read().strip()
+
+if data in gojuon:
+    idx = gojuon.index(data)
+    print(gojuon[(idx + 1) % len(gojuon)])
