@@ -1,37 +1,37 @@
-#/bin/bash -xv 
-#SPDX-FileCopyrightText: 2025 Akari Sunagawa
-#SPDX-License-Indentifier: BSD-3-Clause
+#!/bin/bash
 
-ng() {
-    echo "${1}行目が違うよ"
-    res=1
-}
+# テスト1: 「あ → い」
+out=$(echo あ | ./gojyuon)
+status=$?
 
-res=0
-
-INPUT="aabccde"
-
-echo "$INPUT" | python3 ./sysk1.py
-
-
-EXPECTED=$(cat <<EOF
-a 2
-b 1
-c 2
-d 1
-e 1
-EOF
-)
-
-# 実際の出力を読み込み
-OUTPUT=$(cat freq.txt)
-
-# 比較
-if [ "$OUTPUT" != "$EXPECTED" ]; then
-    ng "$LINENO"
+if [ "$out" = "い" ] && [ $status -eq 0 ]; then
+    echo "test1 OK"
+else
+    echo "test1 NG (out='$out', status=$status)"
+    exit 1
 fi
 
-# 結果
-[ "${res}" = 0 ] && echo "OK"
+# テスト2: 「ん → あ」
+out=$(echo ん | ./gojyuon)
+status=$?
 
-exit $res
+if [ "$out" = "あ" ] && [ $status -eq 0 ]; then
+    echo "test2 OK"
+else
+    echo "test2 NG (out='$out', status=$status)"
+    exit 1
+fi
+
+# テスト3: 五十音以外
+out=$(echo A | ./gojyuon)
+status=$?
+
+if [ -z "$out" ] && [ $status -eq 0 ]; then
+    echo "test3 OK"
+else
+    echo "test3 NG (out='$out', status=$status)"
+    exit 1
+fi
+
+echo "ALL OK"
+exit 0
